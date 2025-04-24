@@ -221,7 +221,11 @@ fun ShowErrorScreen(errorMessage: String) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = errorMessage, color = Color.Black, fontSize = 24.sp)
+        Text(
+            text = errorMessage,
+            style = MaterialTheme.typography.headlineLarge,
+            color = MaterialTheme.colorScheme.onBackground
+        )
     }
 }
 
