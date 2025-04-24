@@ -36,8 +36,8 @@ data class Street(
 )
 
 data class Picture(
-    @SerializedName("thumbnail")
-    val thumbnail: String,
+    @SerializedName("medium")
+    val medium: String,
     @SerializedName("large")
     val large: String
 )

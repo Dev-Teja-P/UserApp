@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -39,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -59,7 +61,9 @@ import java.net.URLEncoder
 fun UserListScreen(navController: NavController, viewModel: UserViewModel) {
     val userUiState by viewModel.userUiState.observeAsState()
     var input by remember { mutableStateOf("10") }
+    var isTextFiledError by remember { mutableStateOf(false) }
     val isLoading = userUiState is UserUiState.Loading
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -86,10 +90,32 @@ fun UserListScreen(navController: NavController, viewModel: UserViewModel) {
                 OutlinedTextField(
                     modifier = Modifier.weight(0.6f),
                     value = input,
-                    onValueChange = { input = it },
+                    onValueChange = { value ->
+                        if (value.all { it.isDigit() }) {
+                            input = value
+                            isTextFiledError = (value.toIntOrNull() ?: 0) < 1
+                        }
+                    },
                     label = {
-                        Text("User count")
-                    })
+                        Text(
+                            text = "User count",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                    },
+                    isError = isTextFiledError,
+                    supportingText = {
+                        if (isTextFiledError) {
+                            Text(
+                                "Value must be at least 1",
+                                color = MaterialTheme.colorScheme.error
+                            )
+                        }
+                    },
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number
+                    )
+                )
                 Spacer(modifier = Modifier.width(8.dp))
                 Button(
                     modifier = Modifier.weight(0.4f),
@@ -105,8 +131,7 @@ fun UserListScreen(navController: NavController, viewModel: UserViewModel) {
             }
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.White),
+                    .fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -152,9 +177,6 @@ fun UserCard(user: User, onClick: () -> Unit) {
             .fillMaxSize()
             .padding(8.dp)
             .clickable(onClick = onClick),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        ),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Row(
@@ -162,7 +184,7 @@ fun UserCard(user: User, onClick: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
-                painter = rememberAsyncImagePainter(user.picture.thumbnail),
+                painter = rememberAsyncImagePainter(user.picture.medium),
                 contentDescription = null,
                 modifier = Modifier
                     .size(64.dp)
@@ -175,8 +197,18 @@ fun UserCard(user: User, onClick: () -> Unit) {
             )
             Spacer(modifier = Modifier.width(12.dp))
             Column {
-                Text("${user.name.first} ${user.name.last}", fontWeight = FontWeight.Bold)
-                Text("${user.location.street.number} ${user.location.street.name}")
+                Text(
+                    "${user.name.first} ${user.name.last}",
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(
+                    "${user.location.street.number} ${user.location.street.name}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
             }
         }
     }
@@ -202,7 +234,7 @@ fun PreviewUserCard() {
             location = Location(Street(6818, "Colaba Causeway")),
             picture = Picture(
                 large = "https://randomuser.me/api/portraits/women/23.jpg",
-                thumbnail = "https://randomuser.me/api/portraits/thumb/women/23.jpg"
+                medium = "https://randomuser.me/api/portraits/medium/women/23.jpg"
             )
         ),
         onClick = {}
