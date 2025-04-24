@@ -30,7 +30,7 @@ data class Location(
 
 data class Street(
     @SerializedName("number")
-    val number: String,
+    val number: Int,
     @SerializedName("name")
     val name: String
 )
