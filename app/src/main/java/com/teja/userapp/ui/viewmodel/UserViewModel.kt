@@ -21,10 +21,11 @@ class UserViewModel @Inject constructor(private val repository: UserRepository) 
         viewModelScope.launch {
             try {
                 val users = repository.fetchUsers(usersCount = usersCount)
-                if (users.isEmpty()) {
+                if (users.isNotEmpty()) {
+                    _userUiState.value = UserUiState.Success(users)
+                } else {
                     _userUiState.value = UserUiState.Error("No Users available")
                 }
-                _userUiState.value = UserUiState.Success(users)
             } catch (e: Exception) {
                 _userUiState.value = UserUiState.Error("Something went wrong.")
             }

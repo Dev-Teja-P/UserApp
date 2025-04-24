@@ -17,11 +17,9 @@ object AppModule {
 
     @Provides
     fun provideHttpClient(): OkHttpClient = OkHttpClient.Builder()
-        .connectTimeout(20, TimeUnit.SECONDS)
-        .readTimeout(
-            20,
-            TimeUnit.SECONDS
-        ) //Added this because API request is taking more that 10 seconds time to read
+        //Added extra timeout because API request is taking more that 10 seconds time to read
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(30, TimeUnit.SECONDS)
         .addInterceptor(HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }).build()
