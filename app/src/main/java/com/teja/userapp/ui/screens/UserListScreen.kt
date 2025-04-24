@@ -130,13 +130,10 @@ fun UserListScreen(navController: NavController, viewModel: UserViewModel) {
                 }
             }
             Column(
-                modifier = Modifier
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+                modifier = Modifier.fillMaxSize()
             ) {
                 when (userUiState) {
-                    is UserUiState.Loading -> CircularProgressIndicator()
+                    is UserUiState.Loading -> ShowLoading()
                     is UserUiState.Success -> LoadUserList(
                         navController = navController,
                         userList = (userUiState as UserUiState.Success).data
@@ -211,6 +208,17 @@ fun UserCard(user: User, onClick: () -> Unit) {
                 )
             }
         }
+    }
+}
+
+@Composable
+fun ShowLoading(){
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        CircularProgressIndicator()
     }
 }
 
