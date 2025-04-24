@@ -9,6 +9,20 @@ lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.1"
 composeBom = "2024.04.01"
 
+retrofit = "2.9.0"
+converterGson = "2.9.0"
+navigation = "2.8.9"
+runtimeLivedata = "1.7.8"
+coil = "2.2.2"
+logInterceptor = "4.12.0"
+hilt = "2.48"
+hiltNavigation = "1.1.0"
+mockito = "5.3.1"
+mockito_kotlin = "5.1.0"
+coroutineTest = "1.7.3"
+coreTesting = "2.2.0"
+kspVersion = "2.0.0-1.0.23"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -25,8 +39,24 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 
+hilt-android = { group = "com.google.dagger", name = "hilt-android" , version.ref = "hilt"}
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler" , version.ref = "hilt"}
+hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose" , version.ref = "hiltNavigation"}
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "converterGson" }
+navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
+androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
+coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+logInterceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "logInterceptor" }
+
+mockitoCore = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
+mockitoKotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito_kotlin" }
+coroutineTest = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutineTest" }
+coreTesting = { group = "androidx.arch.core", name = "core-testing", version.ref = "coreTesting" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-
+kotlinAndroidKsp = { id = "com.google.devtools.ksp", version.ref ="kspVersion" }
+hiltAndroid = { id = "com.google.dagger.hilt.android", version.ref ="hilt" }

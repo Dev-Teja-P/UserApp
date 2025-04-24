@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlinAndroidKsp)
+    alias(libs.plugins.hiltAndroid)
 }
 
 android {
@@ -40,6 +42,19 @@ android {
 }
 
 dependencies {
+
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation)
+    ksp(libs.hilt.compiler)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.navigation)
+    implementation(libs.coil)
+    implementation(libs.logInterceptor)
+    testImplementation(libs.mockitoCore)
+    testImplementation(libs.mockitoKotlin)
+    testImplementation(libs.coroutineTest)
+    testImplementation(libs.coreTesting)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
